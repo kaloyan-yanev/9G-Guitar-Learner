@@ -1,33 +1,50 @@
-import tkinter as tk
+import pygame
+import sys
 
-def button_clicked(): 
-    print("Button clicked!")
+pygame.init()
+
+screen = pygame.display.set_mode((2560, 1440),
+                                 pygame.FULLSCREEN)
+
+width = screen.get_width()
+height = screen.get_height()
+
+Icon = pygame.image.load("logo.jpg")
+pygame.display.set_caption("GuitarLearner")
+pygame.display.set_icon(Icon)
+
+color = (80, 80, 80)
+color_light = (175, 175, 175)
+color_dark = (50, 50, 50)
+
+smallfont = pygame.font.SysFont('Corbel',35)
+text = smallfont.render('play song', True, color_light)
+
+screen.fill(color)
+pygame.display.flip()
+
+
+
+exit = False
+
+while not exit:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+        
+        if event.type == pygame.MOUSEBUTTONDOWN: 
+               
+            if width/2 <= mouse[0] <= width/2+140 and height/2 <= mouse[1] <= height/2+40: 
+                pygame.quit() 
+    mouse = pygame.mouse.get_pos()
     
-root = tk.Tk()
-
-button = tk.Button(root,
-                   text="Click Me",
-                   command=button_clicked,
-                   activebackground="blue",
-                   activeforeground="white",
-                   anchor="center",
-                   bd=3,
-                   bg="lightgray",
-                   cursor="hand2",
-                   disabledforeground="gray",
-                   fg="black",
-                   font=("Arial", 12),
-                   height=2,
-                   highlightbackground="black",
-                   highlightcolor="green",
-                   highlightthickness=2,
-                   justify="center",
-                   overrelief="raised",
-                   padx=10,
-                   pady=5,
-                   width=15,
-                   wraplength=100)
-
-button.pack(padx=20, pady=20)
-
-root.mainloop()
+    if width/2 <= mouse[0] <= width/2+140 and height/2 <= mouse[1] <= height/2+40: 
+        pygame.draw.rect(screen,color_light,[width/2,height/2,140,40]) 
+          
+    else: 
+        pygame.draw.rect(screen,color_dark,[width/2,height/2,140,40]) 
+      
+    screen.blit(text , (width/2+50,height/2)) 
+     
+    pygame.display.update() 
+pygame.quit
