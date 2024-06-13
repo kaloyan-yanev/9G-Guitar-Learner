@@ -31,3 +31,17 @@ class Button():
             self.text = self.font.render(self.text_input, True, self.hovering_color)
         else:
             self.text = self.font.render(self.text_input, True, self.base_color)
+
+class Note():
+    def __init__(self, image, pos, text_input, font, base_color, hit_color):
+        self.image = image
+        self.x_pos = pos[0]
+        self.y_pos = pos[1]
+        self.font = font
+        self.base_color, self.hit_color = base_color, hit_color
+        self.text_input = text_input
+        self.text = self.font.render(self.text_input, True, self.base_color)
+        if self.image is None:
+            self.image = self.text
+        self.rect = self.image.get_rect(topleft=(self.x_pos, self.y_pos))
+        self.text_rect = self.text.get_rect(topleft=(self.x_pos, self.y_pos))
