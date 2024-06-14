@@ -5,15 +5,16 @@ import sys
 pygame.init()
                 
 
-screen = pygame.display.set_mode((2560, 1440))
+screen = pygame.display.set_mode((1920, 1080))
 pygame.display.set_caption("GuitarLearner")
 
 Logo = pygame.image.load("assets/logo.jpg")
 pygame.display.set_icon(Logo)
 
-beat_marker = pygame.Rect ( screen.get_width() // 2, screen.get_height() - 200, screen.get_width() // 2 - 475, 30)
+beat_marker = pygame.Rect ( screen.get_width() // 2 +25, screen.get_height() - 200, screen.get_width() // 2 - 195, 30)
  
-hit = False
+Hit = False
+
 
 note = Notes(screen, 'assets/note.png' , 5)
 
@@ -27,13 +28,18 @@ rect_7 = pygame.Rect(screen.get_width() // 2 + 700, 0, 10, screen.get_height())
 
 running = True
 while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+    
     note.Hit(beat_marker)
     screen.fill("black")
 
     note.move()
     note.draw()
     
-    pygame.draw.rect(screen, "red", beat_marker)
+    pygame.draw.rect(screen, "white", beat_marker)
     pygame.draw.rect(screen, "gray", rect_1)
     pygame.draw.rect(screen, "gray", rect_2)
     pygame.draw.rect(screen, "gray", rect_3)
