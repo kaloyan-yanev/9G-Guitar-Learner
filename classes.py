@@ -1,4 +1,5 @@
 import pygame
+import pandas
 import sys
 
 class Button():
@@ -33,15 +34,21 @@ class Button():
             self.text = self.font.render(self.text_input, True, self.base_color)
 
 class Notes:
-    def __init__(self, screen, note_image_path, note_speed):
+    def __init__ (self, screen, note_image, note_pos, note_font, note_text_input, note_color, beat_marker_y):
         self.screen = screen
-        self.note_image = pygame.image.load(note_image_path)
+        self.note_image = note_image
+        self.notes_x = note_pos[0]
+        self.notes_y = note_pos[1]
+        self.notes_font = note_font
+        self.notes_text_input = note_text_input
+        self.notes_color = note_color
+        self.notes_text = self.notes_font.render(self.notes_text_input, True, self.notes_color)
+        if self.note_image is None:
+            self.note_image = self.notes_text
         self.note_image = pygame.transform.scale(self.note_image, (50, 50))
         self.notes = self.note_image.get_rect()
-        self.notes.center = (self.screen.get_width() // 2 + 150, 0)
-        self.notes.y = -200  
         self.hit = False
-        self.note_speed = note_speed
+        self.note_speed = beat_marker_y/120
 
     def move(self):
         self.notes.y = self.notes.y + self.note_speed
@@ -52,7 +59,7 @@ class Notes:
     def draw(self):
         self.screen.blit(self.note_image, (self.notes.x , self.notes.y))
 
-    def Hit(self, beat_marker):
+    def hit(self, beat_marker):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and not self.hit:
                 if event.key == pygame.K_SPACE:
